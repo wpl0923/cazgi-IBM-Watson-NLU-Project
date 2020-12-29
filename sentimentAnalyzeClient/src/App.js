@@ -11,6 +11,10 @@ class App extends React.Component {
           sentiment:true
         }
   
+  componentDidMount() {
+    document.title = 'Sentiment Analyzer';
+  }
+
   renderTextArea = ()=>{
     document.getElementById("textinput").value = "";
     if(this.state.mode === "url") {
@@ -47,6 +51,7 @@ class App extends React.Component {
     ret.then((response)=>{
 
       //Include code here to check the sentiment and fomrat the data accordingly
+      console.log(response.data);
 
       this.setState({sentimentOutput:response.data});
       let output = response.data;
@@ -55,7 +60,7 @@ class App extends React.Component {
       } else if (response.data === "negative"){
         output = <div style={{color:"red",fontSize:20}}>{response.data}</div>
       } else {
-        output = <div style={{color:"orange",fontSize:20}}>{response.data}</div>
+        output = <div style={{color:"yellow",fontSize:20}}>{response.data}</div>
       }
       this.setState({sentimentOutput:output});
     });
@@ -73,6 +78,7 @@ class App extends React.Component {
     ret = axios.get(url);
 
     ret.then((response)=>{
+      console.log(response.data);
       this.setState({sentimentOutput:<EmotionTable emotions={response.data}/>});
   });
   }
